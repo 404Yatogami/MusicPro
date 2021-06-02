@@ -52,7 +52,7 @@ def new_instrument(request):
         else:
             data["form"] = formulario
     return render(request, 'core/new_instrument.html', data)
-    #Carrito de compras
+#Carrito de compras
 def cart(request):
     cart = Cart(request)
     total = 0
