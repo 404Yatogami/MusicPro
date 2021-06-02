@@ -1,0 +1,130 @@
+.uwu{
+    background-color: rgb(238, 234, 221);
+}
+.bottom_nav {
+    width: 100%;
+    background: #16222A;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3A6073, #16222A);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3A6073, #16222A);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 45px;
+    padding: 80px 50px;
+    padding-top: 100px;
+}
+.bottom_nav ul {
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bottom_nav ul li {
+    height: 60px;
+    text-align: center;
+}
+    .bottom_nav ul li:hover {
+        background-color: #0f3147;
+        border-radius: 20px;
+        transition-delay: 0.1s;
+    }
+.bottom_nav ul li a {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+
+.container-fluid a {
+    font-size: 20px;
+    color: #ffffff;
+}
+.collapse navbar-collapse{
+    flex-grow: unset;
+}
+.navbar {
+    background: #232526;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2c2c31, #232526);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #414345, #232526);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+
+/* footer*/
+
+footer .container {
+    max-width: 1170px;
+    margin: auto;
+}
+
+.footer {
+    background-color: #33363d;
+}
+
+ul {
+    list-style: none;
+}
+
+.footer {
+    padding-top: 20px;
+}
+
+.footer-col {
+    text-transform: capitalize;
+}
+/* no me toma el align center, esta hacia la derecha */
+footer .row { 
+    text-align: left;  
+}
+
+.footer-col h4 {
+    font-size: 18px;
+    color: lavenderblush;
+    text-transform: capitalize;
+    margin-bottom: 30px;
+    font-weight: 500;
+    position: relative;
+}
+
+.footer-col ul li a {
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 300;
+    color: #bbb;
+    display: block;
+}
+
+
+/*'rallita' :before  estilo debajo del titulo h4 */
+
+.footer-col h4::before {
+    content: '';
+    position: absolute;
+    left: 10;
+    bottom: -10px;
+    background-color: rgb(90, 126, 54);
+    height: 2px;
+    box-sizing: border-box;
+    width: 80px;
+}
+
+
+/* :hover para efecto luz en los titulos*/
+
+.footer-col ul li a:hover {
+    color: #fff;
+    padding-left: 10px;
+}
+
+.boleta{
+    background-color: palegreen;
+}
+
+
+
+/*login*/
+
