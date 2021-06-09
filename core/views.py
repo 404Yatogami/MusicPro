@@ -1,3 +1,4 @@
+from django.http import response
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from .forms import CustomUserForms, ProductForm
