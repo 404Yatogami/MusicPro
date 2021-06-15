@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block name %}
+<title>MusicPro - SubCategorias</title>
+{% endblock %}
+{% block content %}
+
+<div class="container card-group">
+    <div class="items">
+      <div class="row">
+        {% for s in all_subcat %}
+        {% if s.categoria_id == categoria.id %}
+        <div class="col-2 col-md-4 ">
+          <div class="card item shadow mb-4">
+            <a class="item-title card-header" href="{% url 'products_cat' s.id %}">{{ s.nom_subcat | title }}</a>
+          </div>
+        </div> 
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

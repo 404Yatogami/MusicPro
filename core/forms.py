@@ -32,3 +32,13 @@ class ProductForm(ModelForm):
         model = Producto
         fields = ['serie_producto', 'marca', 'codigo', 'nombre', 'valor', 'sub_categoria', 'imagen']
         help_texts = {k:"" for k in fields}
+
+class ModifyProductForm(ModelForm):
+    marca = forms.CharField(label='Marca')
+    codigo = forms.CharField(label='Codigo')
+    nombre = forms.CharField(label='Nombre')
+    valor = forms.IntegerField(label='Valor')
+    class Meta:
+        model = Producto
+        fields = ['marca', 'codigo', 'nombre', 'valor', 'sub_categoria', 'imagen']
+        help_texts = {k:"" for k in fields}

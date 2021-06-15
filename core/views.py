@@ -1,9 +1,9 @@
 from django.http import response
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate
-from .forms import CustomUserForms, ProductForm
+from .forms import CustomUserForms, ProductForm, ModifyProductForm
 from django.shortcuts import render, redirect
-from .models import Categoria, Producto
+from .models import Categoria, Producto, Sub_Categoria
 from django.views.decorators.csrf import csrf_protect
 from .cart import Cart
 #webpay
@@ -41,7 +41,7 @@ def register(request):
 
     return render(request, 'core/register.html', data)
 
-def new_instrument(request):
+def new_product(request):
     data = {
         'form' : ProductForm
     }
@@ -52,9 +52,65 @@ def new_instrument(request):
             data["mensaje"] = "Guardado Correctamente"
         else:
             data["form"] = formulario
-    return render(request, 'core/new_instrument.html', data)
+    return render(request, 'core/new_product.html', data)
+
+def modify_product(request, id):
+    producto = Producto.objects.get(id=id)
+    data= {
+        'form' : ModifyProductForm(instance = producto),
+    }
+
+    if request.method == 'POST' : 
+        formulario = ModifyProductForm(data=request.POST, instance=producto, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            data['mensaje'] = "Modificado Correctamente"
+        data['form'] = ModifyProductForm(instance=Producto.objects.get(id=id))
+
+    return render(request, 'core/modify_product.html', data)
+
+def list_product(request):
+    product = Producto.objects.all()
+    all_categorias = Categoria.objects.all()
+
+    data ={
+        'product':product,
+        'all_categorias' : all_categorias
+    }
+    return render(request, 'core/list_product.html', data)
+
+def delete_product(request, id):
+
+    producto = Producto.objects.get(id = id)
+    producto.delete()
+
+    return redirect(to="list_product")
+
+def products_cat(request, id):
+    all_categorias = Categoria.objects.all()
+    subcategoria = Sub_Categoria.objects.get(id=id)
+    all_products = Producto.objects.all()
+    data = {
+        
+        'all_products' : all_products,
+        'subcategoria' : subcategoria,
+        'all_categorias' : all_categorias,
+    }
+    return render(request, 'core/products_categories.html', data)
+def sub_categories(request, id):
+    all_categorias = Categoria.objects.all() 
+    categoria = Categoria.objects.get(id=id)
+    all_subcat = Sub_Categoria.objects.all()
+    data = {
+        'all_categorias' : all_categorias,
+        'categoria' : categoria,
+        'all_subcat' : all_subcat,
+    }
+    return render(request, 'core/sub_categories.html', data)
+
 #Carrito de compras
 def cart(request):
+    all_categorias = Categoria.objects.all()
     cart = Cart(request)
     total = 0
     FprecioC = 0
@@ -69,10 +125,10 @@ def cart(request):
     try:
         response = Transaction().create(buy_order, session_id, amount, return_url)
         print(amount)
-        return render(request, 'core/cart.html', {"response":response})
+        return render(request, 'core/cart.html', {"response":response, 'all_categorias' : all_categorias})
     except TransbankError as e:
         print(e.message)
-        return render(request, 'core/cart.html', {})
+        return render(request, 'core/cart.html', {'all_categorias' : all_categorias})
 
 def webpay_plus_commit(request):
     cart = Cart(request)

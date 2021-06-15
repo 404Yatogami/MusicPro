@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block name %}
+<title>MusicPro - Categorias</title>
+{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h1>
+      Productos
+    </h1>
+</div>
+  <br>
+
+  <div class="container card-group">
+    <div class="items">
+      <div class="row">
+        {% for i in all_products %}
+        {% if i.sub_categoria_id == subcategoria.id %}
+        <div class="col-2 col-md-4 ">
+          <div class="card item shadow mb-4">
+            <h3 class="item-title card-header">{{ i.nombre | title }}</h3>
+            {% if i.imagen %}
+            <img class="item-image" src="{{ i.imagen.url }}">
+            {% endif %}
+            <div class="item-details card card-header">
+              <h4 class="item-price">{{ i.valor | intcomma }}</h4>
+              <button class="item-button btn btn-primary addToCart"><a class="badge badge-primary" href="{% url 'add_product_detail' i.id %}"> Agregar al Carrito </a></button>
+            </div>
+          </div>
+        </div> 
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}

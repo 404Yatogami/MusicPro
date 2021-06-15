@@ -11,6 +11,9 @@
     <div class="col-12 col-md-6 offset-md-3">
         <div class="card">
             <div class="card-body">
+                <div>
+                    <p class="alert alert-success">{{ mensaje }}</p>
+                </div>
                 <table class="table table-striped table-hover">
                     <tr>
                         <th>Serie</th>
@@ -18,15 +21,21 @@
                         <th>Precio</th>
                         <th>Marca</th>
                         <th>Sub Categoria</th>
+                        <th>Opciones</th>
                     </tr>
 
-                    {% for i in all_instrument %}
+                    {% for i in product %}
                     <tr>
                         <td>{{ i.serie_producto | title }}</td>
                         <td>{{ i.nombre | title }}</td>
                         <td>${{ i.valor | intcomma }}</td>
                         <td>{{ i.marca | title }}</td>
                         <td>{{ i.sub_categoria | title }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'modify_product' i.id %}">Modificar</a>
+                            <br>
+                            <a class="btn btn-danger" href="{% url 'delete_product' i.id %}">Eliminar</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </table>

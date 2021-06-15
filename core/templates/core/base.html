@@ -27,6 +27,25 @@
           </button>
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="btn btn-dark active" href="{% url 'new_product' %}">Agregar Producto</a>
+                        </li>
+                        &nbsp; 
+                        &nbsp;
+                        <li class="nav-item">
+                            <a class="btn btn-dark active" href="{% url 'list_product' %}">Lista de Productos</a>
+                        </li>
+                        {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link active">{{ user.username }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'logout' %}">Cerrar Sesión</a> 
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'login' %}">Login</a>
                     </li>
@@ -34,6 +53,8 @@
                     <li class="nav-item">
                         <a class="btn btn-dark active" href="{% url 'register' %}">Registrarse</a>
                     </li>
+                    {% endif %}
+                    
                     <li>
                         <a href="{% url 'cart' %}" class="nav-item nav-link">Carrito</a>
                     </li>
@@ -47,7 +68,7 @@
         <div class="bottom_nav">
             <ul class="row">
                 {% for c in all_categorias %}
-                <li class="col col-md-2 col-sm-3 col-xs-6 "><a class="text-decoration-none" href="#">{{c.categoria }}</a></li>
+                <li class="col col-md-2 col-sm-3 col-xs-6 "><a class="text-decoration-none" href="{% url 'sub_categories' c.id %}">{{c.categoria }}</a></li>
                 {% endfor %}
             </ul>
         </div>
