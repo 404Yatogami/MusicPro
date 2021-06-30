@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+{% block name%}
+<title>MusicPro - Agregar Categorias</title>
+{% endblock %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<br>
+<br>
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="alert alert-success">{{ mensaje }}</div>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="card">
+                <div class="card-body">
+                    {{ form | crispy }}
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-danger" href="{% url 'list_category' %}">Cancelar</a>
+                        &nbsp;
+                        &nbsp;  
+                        <input type="submit" value="Guardar" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}

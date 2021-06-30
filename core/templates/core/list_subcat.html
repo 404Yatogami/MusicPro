@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% block name%}
+<title>MusicPro - Lista de subcategorias</title>
+{% endblock %}
+{% block content %}
+{% load humanize %}
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <p class="alert alert-danger">{{ mensaje }}</p>
+                    <a class="btn btn-primary" href="{% url 'new_subcat' %}">Agregar SubCategoria</a>
+                </div>
+                
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Opciones</th>
+                    </tr>
+
+                    {% for as in all_subcat %}
+                    <tr>
+                        <td>{{ as.id | title }}</td>
+                        <td>{{ as.nom_subcat | title }}</td>
+                        <td>{{ as.categoria | title }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'modify_subcat' as.id %}">Modificar</a>
+                            <br>
+                            <a class="btn btn-danger" href="{% url 'delete_subcat' as.id %}">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}

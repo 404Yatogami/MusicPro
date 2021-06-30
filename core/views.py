@@ -1,13 +1,12 @@
 from django.http import response
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate
-from .forms import CustomUserForms, ProductForm, ModifyProductForm
+from .forms import CategoryForm, CustomUserForms, ProductForm, ModifyProductForm, SubCategoryForm
 from django.shortcuts import render, redirect
 from .models import Categoria, Producto, Sub_Categoria
 from django.views.decorators.csrf import csrf_protect
 from .cart import Cart
 #webpay
-import random
 from transbank.webpay.webpay_plus.transaction import Transaction
 from transbank.error.transbank_error import TransbankError
 
@@ -29,12 +28,10 @@ def register(request):
         'form':CustomUserForms()
     }
     if request.method == 'POST':
-        form = CustomUserForms(request.POST)
+        form = CustomUserForms(data=request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
             login(request, user)
             
             return redirect(to='index')
@@ -85,6 +82,107 @@ def delete_product(request, id):
     producto.delete()
 
     return redirect(to="list_product")
+
+def new_category(request):
+    data = {
+        'form' : CategoryForm
+    }
+    if request.method == 'POST':
+        formulario = CategoryForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "Guardado Correctamente"
+        else:
+            data["form"] = formulario
+    return render(request, 'core/new_category.html', data)
+
+def list_category(request):
+    all_categorias = Categoria.objects.all()
+    data ={
+        'all_categorias':all_categorias
+    }
+    return render(request, 'core/list_category.html', data)
+
+def modify_category(request, id):
+    category = Categoria.objects.get(id=id)
+    data= {
+        'form' : CategoryForm(instance = category),
+    }
+
+    if request.method == 'POST' : 
+        formulario = CategoryForm(data=request.POST, instance=category)
+        if formulario.is_valid():
+            formulario.save()
+            data['mensaje'] = "Modificado Correctamente"
+        data['form'] = CategoryForm(instance=Categoria.objects.get(id=id))
+
+    return render(request, 'core/modify_category.html', data)
+
+def delete_category(request, id):
+    if Sub_Categoria.objects.filter(categoria=id):
+        all_categorias = Categoria.objects.all()
+        data ={
+            
+            'mensaje' : "No es posible eliminar debido a que existen SubCategorias asociados",
+            'all_categorias':all_categorias
+        }
+        return render(request, 'core/list_category.html', data)
+    else:
+        category = Categoria.objects.get(id = id)
+        category.delete()
+        return redirect(to="list_category")
+
+    
+
+def new_subcat(request):
+    data = {
+        'form' : SubCategoryForm
+    }
+    if request.method == 'POST':
+        formulario = SubCategoryForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "Guardado Correctamente"
+        else:
+            data["form"] = formulario
+    return render(request, 'core/new_subcat.html', data)
+
+def list_subcat(request):
+    all_subcat = Sub_Categoria.objects.all()
+    data ={
+        'all_subcat':all_subcat
+    }
+    return render(request, 'core/list_subcat.html', data)
+
+def modify_subcat(request, id):
+    subcat = Sub_Categoria.objects.get(id=id)
+    data= {
+        'form' : SubCategoryForm(instance = subcat),
+    }
+
+    if request.method == 'POST' : 
+        formulario = SubCategoryForm(data=request.POST, instance=subcat)
+        if formulario.is_valid():
+            formulario.save()
+            data['mensaje'] = "Modificado Correctamente"
+        data['form'] = SubCategoryForm(instance=Sub_Categoria.objects.get(id=id))
+
+    return render(request, 'core/modify_subcat.html', data)
+
+def delete_subcat(request, id):
+    if Producto.objects.filter(sub_categoria=id):
+        all_subcat = Sub_Categoria.objects.all()
+        data ={
+
+            'mensaje' : "No es posible eliminar debido a que existen productos asociados",
+            'all_subcat':all_subcat
+        }
+        return render(request, 'core/list_subcat.html', data)
+    else:   
+        subcat = Sub_Categoria.objects.get(id = id)
+        subcat.delete()
+        return redirect(to="list_subcat")
+    
 
 def products_cat(request, id):
     all_categorias = Categoria.objects.all()

@@ -5,7 +5,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from core.models import Producto
+from core.models import Categoria, Producto, Sub_Categoria
 
 
 class CustomUserForms(UserCreationForm):
@@ -20,7 +20,7 @@ class CustomUserForms(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
-        help_texts = {k:"" for k in fields}
+        
     
 class ProductForm(ModelForm):
     serie_producto = forms.CharField(label='Serie del Producto')
@@ -42,3 +42,17 @@ class ModifyProductForm(ModelForm):
         model = Producto
         fields = ['marca', 'codigo', 'nombre', 'valor', 'sub_categoria', 'imagen']
         help_texts = {k:"" for k in fields}
+
+class CategoryForm(ModelForm):
+    categoria = forms.CharField(label='Nombre de categoria')
+    class Meta:
+        model = Categoria
+        fields = ['categoria']
+        help_text = {k:"" for k in fields}
+
+class SubCategoryForm(ModelForm):
+    nom_subcat = forms.CharField(label='Nombre SubCategoria')
+    class Meta:
+        model = Sub_Categoria
+        fields = ['nom_subcat', 'categoria']
+        help_text = {k:"" for k in fields}

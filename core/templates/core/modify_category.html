@@ -3,14 +3,14 @@
 {% load humanize %}      
 {% load crispy_forms_tags %} 
 {% block name%}
-<title>MusicPro - Modificar Productos</title>
+<title>MusicPro - Modificar Categorias</title>
 {% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-12 col-md-6 offset-md-3">
         <div class="card">
             <div class="card-body">
-                <h2>Modificar Producto</h2>
+                <h2>Modificar Categoria</h2>
                 <div>
                     <p class="alert alert-success">{{ mensaje }}</p>
                 </div>
@@ -23,7 +23,7 @@
                     <br>
                     <br>
                     <div class="d-flex justify-content-center">
-                        <a class="btn btn-danger" href="{% url 'list_product' %}">Cancelar</a>
+                        <a class="btn btn-danger" href="{% url 'list_category' %}">Cancelar</a>
                         &nbsp;
                         &nbsp;  
                         <input type="submit" value="Modificar" class="btn btn-primary">

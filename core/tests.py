@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from django.http import request
 from django.test import TestCase
 from . import views

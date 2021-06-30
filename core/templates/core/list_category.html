@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block name%}
+<title>MusicPro - Lista de categorias</title>
+{% endblock %}
+{% block content %}
+{% load humanize %}
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <p class="alert alert-danger">{{ mensaje }}</p>
+                    <a class="btn btn-primary text-align-center" href="{% url 'new_category' %}">Agregar Categoria</a>
+                </div>
+                
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Opciones</th>
+                    </tr>
+
+                    {% for c in all_categorias %}
+                    <tr>
+                        <td>{{ c.id | title }}</td>
+                        <td>{{ c.categoria | title }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'modify_category' c.id %}">Modificar</a>
+                            <br>
+                            <a class="btn btn-danger" href="{% url 'delete_category' c.id %}">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}
